@@ -32,6 +32,7 @@
         android:layout_marginBottom="8dp"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:text="Joel"
         app:layout_constraintBottom_toTopOf="@+id/textView12"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent"
