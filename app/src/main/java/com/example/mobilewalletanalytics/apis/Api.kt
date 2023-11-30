@@ -14,7 +14,7 @@ interface Api {
      * Fetch all user transactions.
      * Returns a list of [Transaction].
      */
-    @GET("transactions")
+    @GET("api/transactions")
     suspend fun fetchAllTransactions(): List<Transaction>
 
 
@@ -23,7 +23,7 @@ interface Api {
      * This is done by providing the start_date and end_date query parameters
      * Returns a list of [Transaction].
      */
-    @GET("transactions")
+    @GET("api/transactions")
     suspend fun fetchTransactionHistory(
         @Query("start_date") start_date: String,
         @Query("end_date") end_date: String
@@ -34,7 +34,7 @@ interface Api {
      * Fetch dashboard statistics.
      * Returns a list of [Transaction].
      */
-    @GET("dashboard")
+    @GET("api/dashboard")
     suspend fun fetchDashboardStatistics(): List<Transaction>
 
 }

@@ -1,5 +1,6 @@
 package com.example.mobilewalletanalytics.di.modules
 
+import android.util.Log
 import com.example.mobilewalletanalytics.apis.Api
 import com.example.mobilewalletanalytics.utils.Constants
 import dagger.Module
@@ -49,6 +50,8 @@ object NetworkModule {
             .client(client)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
+
+       println("BUILDER: $retrofitBuilder")
         return retrofitBuilder.build()
     }
 
