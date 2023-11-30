@@ -20,7 +20,8 @@ class RemoteRepoImpl @Inject constructor(val api: Api) : RemoteRepo {
     }
 
     /**
-     * Performs an api call to fetch all past transactions/transactions history.
+     * Performs an api call to fetch all past transactions/transactions history
+     * based on start_date and end_date query parameter.
      * Returns a list of transaction.
      */
     override suspend fun fetchTransactionsHistory(
