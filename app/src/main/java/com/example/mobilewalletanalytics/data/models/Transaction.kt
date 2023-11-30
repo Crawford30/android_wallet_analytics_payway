@@ -11,5 +11,7 @@ data class Transaction(
     val amount: Int,
     val type: String,
     val service: String,
-    val category: String
+    val category: String,
+    val created_at: String,
+    val updated_at: String
 ):Parcelable

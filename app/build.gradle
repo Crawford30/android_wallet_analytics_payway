@@ -1,8 +1,13 @@
 plugins {
+
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+//    id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -38,6 +43,10 @@ dependencies {
 
     def nav_version = '2.7.5'
     def work_version = '2.8.1'
+    def lifecycle_version = "2.3.0"
+    def room_version = "2.5.0-alpha01"
+    def glide_version = "4.12.0"
+    def hilt_version = "2.41"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
@@ -66,6 +75,50 @@ dependencies {
 
     //Navigation Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
+
+    //okhttp3 bom
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+
+    //okhttp artifacts
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    //RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+
+    //Room Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    implementation "com.google.dagger:hilt-android:2.44"
+    annotationProcessor "com.google.dagger:hilt-android-compiler:2.44"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
