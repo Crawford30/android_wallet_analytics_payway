@@ -1,4 +1,4 @@
-package com.example.mobilewalletanalytics.ui
+package com.example.mobilewalletanalytics.presentation.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
