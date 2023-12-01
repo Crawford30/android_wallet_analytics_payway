@@ -3,11 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/transactionsListFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/transactionsListFragment"
         android:name="com.example.mobilewalletanalytics.presentation.ui.TransactionsListFragment"
-        android:label="fragment_transactions_list"
         tools:layout="@layout/fragment_transactions_list" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.mobilewalletanalytics.presentation.ui.HomeFragment"
+        tools:layout="@layout/fragment_home" />
 </navigation>

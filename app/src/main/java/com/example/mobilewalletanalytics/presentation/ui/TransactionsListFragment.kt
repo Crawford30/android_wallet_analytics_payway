@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.mobilewalletanalytics.R
 import com.example.mobilewalletanalytics.databinding.FragmentTransactionsListBinding
 import com.example.mobilewalletanalytics.presentation.adapters.TransactionHistoryAdapter
@@ -47,6 +49,8 @@ class TransactionsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         viewLifecycleOwner.lifecycleScope.launch {
             appViewModel.usersLiveData.observe(viewLifecycleOwner){
                 adapter.submitList(it)
