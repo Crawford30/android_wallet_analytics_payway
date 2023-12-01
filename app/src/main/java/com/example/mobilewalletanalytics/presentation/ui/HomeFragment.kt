@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobilewalletanalytics.R
 import com.example.mobilewalletanalytics.databinding.FragmentHomeBinding
 import com.example.mobilewalletanalytics.databinding.FragmentTransactionsListBinding
 import com.example.mobilewalletanalytics.presentation.adapters.TransactionDashboardAdapter
 import com.example.mobilewalletanalytics.presentation.adapters.TransactionHistoryAdapter
 import com.example.mobilewalletanalytics.presentation.viewmodels.AppViewModel
+import com.example.mobilewalletanalytics.utils.TopSpacingItemDecoration
+import com.example.mobilewalletanalytics.utils.formatNumberToThousands
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -33,27 +36,33 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home, container, false)
-
-
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         adapter = TransactionDashboardAdapter(binding!!.progressBar){
-//            val action = UsersListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(it)
-//            findNavController().navigate(action)
         }
+
         binding?.transactionDashboardRecycler?.adapter = adapter
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Mobile Analytics"
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Dashboard Statistics"
+
+        binding?.transactionDashboardRecycler?.apply{
+            layoutManager = LinearLayoutManager(activity)
+            val topSPacingDecoration = TopSpacingItemDecoration(20)
+            addItemDecoration(topSPacingDecoration)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             appViewModel.dashboardLiveData.observe(viewLifecycleOwner){
-                println("DASHBOARD: ${it}")
+//                println("DASHBOARD: ${it}")
+
+                val balance = it.total_deposits.toLong() - it.total_withdrawals.toLong()
+                binding?.balanceTextView?.text = "${formatNumberToThousands((balance))} UGX"
+
                 adapter.submitList(it.category_breakdown)
+
             }
         }
     }

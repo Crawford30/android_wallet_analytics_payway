@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/balance_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$2606.78"
@@ -49,7 +49,7 @@
         app:layout_constraintDimensionRatio="4:2"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/balance_text_view" />
 
     <TextView
         android:id="@+id/textView3"
