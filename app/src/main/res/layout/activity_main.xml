@@ -17,21 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="379dp"
-        android:layout_height="672dp"
-        app:defaultNavHost="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_graph" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/floatingActionButton2"-->
 <!--        android:layout_width="0dp"-->
 <!--        android:layout_height="wrap_content"-->
@@ -41,6 +27,21 @@
 <!--        app:maxImageSize="34dp"-->
 <!--        tools:layout_editor_absoluteX="169dp"-->
 <!--        tools:layout_editor_absoluteY="659dp" />-->
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="372dp"
+        android:layout_height="658dp"
+        android:layout_marginTop="8dp"
+        app:defaultNavHost="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"

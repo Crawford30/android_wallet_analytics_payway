@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Transaction(
     val id: Int,
-    val transactionDate: String,
+    val tx_finish: String,
     val amount: Int,
     val type: String,
     val service: String,
