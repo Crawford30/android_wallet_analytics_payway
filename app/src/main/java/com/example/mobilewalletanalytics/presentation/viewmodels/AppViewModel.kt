@@ -3,6 +3,7 @@ package com.example.mobilewalletanalytics.presentation.viewmodels
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import com.example.mobilewalletanalytics.data.models.Transaction
+import com.example.mobilewalletanalytics.data.models.TransactionDashboard
 import com.example.mobilewalletanalytics.data.remote_interfaces.RemoteRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,11 +27,14 @@ class AppViewModel @Inject constructor(private val remoteRepo: RemoteRepo) : Vie
      * All transactions history are fetched from here. There's no pagination here since the users are few(10)
      */
     private var _transactionsHistoryLiveData = MutableLiveData<List<Transaction>>()
+    private var _transactionsDashoardData = MutableLiveData<TransactionDashboard>()
 
     val usersLiveData: LiveData<List<Transaction>> get() = _transactionsHistoryLiveData
+    val dashboardLiveData: LiveData<TransactionDashboard> get() = _transactionsDashoardData
     init {
         viewModelScope.launch {
             _transactionsHistoryLiveData.value = remoteRepo.fetchTransactionsHistory("2023-10-01 08:33:57", "2023-10-01 11:29:55")
+            _transactionsDashoardData.value = remoteRepo.fetchDashboardStatistics()
         }
     }
 

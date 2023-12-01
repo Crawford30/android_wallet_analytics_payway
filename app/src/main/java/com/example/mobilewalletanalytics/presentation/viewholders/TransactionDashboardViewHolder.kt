@@ -7,26 +7,26 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilewalletanalytics.R
+import com.example.mobilewalletanalytics.data.models.CategoryBreakdown
 import com.example.mobilewalletanalytics.data.models.Transaction
+import com.example.mobilewalletanalytics.data.models.TransactionDashboard
 import com.example.mobilewalletanalytics.utils.formatNumberToThousands
 import com.example.mobilewalletanalytics.utils.formatTimestamp
 import com.google.android.material.textview.MaterialTextView
 
-class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    private val categoryTextView: MaterialTextView = view.findViewById(R.id.category)
-    private val serviceTextView: MaterialTextView = view.findViewById(R.id.service)
-    private val transactionDateTextView: MaterialTextView = view.findViewById(R.id.withdrawal_transaction_amount)
-    private val transactionAmountTextView: MaterialTextView = view.findViewById(R.id.deposit_transaction_amount)
+class TransactionDashboardViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
+    private val categoryTextView: MaterialTextView = view.findViewById(R.id.category_label)
+    private val transactionWithdrawalAmountTextView: MaterialTextView = view.findViewById(R.id.withdrawal_transaction_amount)
+    private val transactionDepositAmountTextView: MaterialTextView = view.findViewById(R.id.deposit_transaction_amount)
     private val imagePlaceholder: ImageView = view.findViewById(R.id.dashboard_image_place_holder)
 
-//    private val detailsBtn: MaterialButton = view.findViewById(R.id.details)
 
-
-    fun bindTo(transaction: Transaction?, onItemClicked: (transaction:  Transaction) -> Unit){
+    fun bindTo(transaction: CategoryBreakdown?, onItemClicked: (transaction: CategoryBreakdown) -> Unit){
         if(transaction != null){
+//            val categoryBreakdown = transaction.get(absoluteAdapterPosition)
             categoryTextView.text = transaction.category
-            serviceTextView.text = transaction.service
-            transactionDateTextView.text = formatTimestamp(transaction.tx_finish)
+
 
             when (transaction.category) {
                 "Mobile Money" -> {
@@ -55,16 +55,11 @@ class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHo
                 }
             }
 
+            transactionDepositAmountTextView.text = "${formatNumberToThousands(transaction.deposit_amount.toLong())} UGX"
+            transactionDepositAmountTextView.setTextColor(Color.GREEN)
 
-
-
-            if(transaction.type == "Deposit"){
-                transactionAmountTextView.text = "${formatNumberToThousands(transaction.amount.toLong())} UGX"
-                transactionAmountTextView.setTextColor(Color.GREEN)
-            }else {
-                transactionAmountTextView.text = "-${formatNumberToThousands(transaction.amount.toLong())} UGX"
-                transactionAmountTextView.setTextColor(Color.RED)
-            }
+            transactionWithdrawalAmountTextView.text = "-${formatNumberToThousands(transaction.withdrawal_amount.toLong())} UGX"
+            transactionWithdrawalAmountTextView.setTextColor(Color.RED)
 
 
 //            detailsBtn.setOnClickListener {
@@ -72,18 +67,19 @@ class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHo
 //            }
         }else{
             categoryTextView.text = ""
-            serviceTextView.text = ""
-            transactionDateTextView.text = ""
-            transactionAmountTextView.text = ""
+            transactionDepositAmountTextView.text = ""
+            transactionWithdrawalAmountTextView.text = ""
         }
         absoluteAdapterPosition
     }
 
     companion object {
-        fun create(parent: ViewGroup): TransactionHistoryViewHolder {
-            return TransactionHistoryViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.row_item_layout, parent, false)
+        fun create(parent: ViewGroup): TransactionDashboardViewHolder {
+            return TransactionDashboardViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.row_item_dashboard_layout, parent, false)
             )
         }
     }
+
 }
+

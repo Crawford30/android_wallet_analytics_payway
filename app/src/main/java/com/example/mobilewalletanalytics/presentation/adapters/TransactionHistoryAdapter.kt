@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilewalletanalytics.data.models.Transaction
+import com.example.mobilewalletanalytics.presentation.viewholders.TransactionDashboardViewHolder
 import com.example.mobilewalletanalytics.presentation.viewholders.TransactionHistoryViewHolder
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
@@ -18,10 +19,12 @@ class TransactionHistoryAdapter (private val progressIndicator: CircularProgress
         return TransactionHistoryViewHolder.create(parent)
     }
 
+
+
     override fun onBindViewHolder(holder: TransactionHistoryViewHolder, position: Int) {
         progressIndicator.visibility = View.GONE
-        val user = transactionHistoryList[position]
-        holder.bindTo(user, onItemClicked)
+        val transactionList = transactionHistoryList[position]
+        holder.bindTo(transactionList, onItemClicked)
     }
 
     override fun getItemCount(): Int {

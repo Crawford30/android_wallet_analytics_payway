@@ -6,29 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.mobilewalletanalytics.R
+import com.example.mobilewalletanalytics.databinding.FragmentHomeBinding
+import com.example.mobilewalletanalytics.databinding.FragmentTransactionsListBinding
+import com.example.mobilewalletanalytics.presentation.adapters.TransactionDashboardAdapter
+import com.example.mobilewalletanalytics.presentation.adapters.TransactionHistoryAdapter
+import com.example.mobilewalletanalytics.presentation.viewmodels.AppViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val appViewModel: AppViewModel by activityViewModels()
+    private var binding: FragmentHomeBinding? = null
+    private lateinit var adapter: TransactionDashboardAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -36,31 +34,37 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+//        return inflater.inflate(R.layout.fragment_home, container, false)
+
+
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        adapter = TransactionDashboardAdapter(binding!!.progressBar){
+//            val action = UsersListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(it)
+//            findNavController().navigate(action)
+        }
+        binding?.transactionDashboardRecycler?.adapter = adapter
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Mobile Analytics"
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            appViewModel.dashboardLiveData.observe(viewLifecycleOwner){
+                println("DASHBOARD: ${it}")
+                adapter.submitList(it.category_breakdown)
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = HomeFragment()
     }
 }

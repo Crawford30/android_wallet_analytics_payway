@@ -2,6 +2,7 @@ package com.example.mobilewalletanalytics.data.remote_repo
 
 import com.example.mobilewalletanalytics.apis.Api
 import com.example.mobilewalletanalytics.data.models.Transaction
+import com.example.mobilewalletanalytics.data.models.TransactionDashboard
 import com.example.mobilewalletanalytics.data.remote_interfaces.RemoteRepo
 import javax.inject.Inject
 
@@ -35,7 +36,7 @@ class RemoteRepoImpl @Inject constructor(val api: Api) : RemoteRepo {
      * Performs an api call to fetch dashboard statistics data.
      * Returns a list of transaction.
      */
-    override suspend fun fetchDashboardStatistics(): List<Transaction> {
+    override suspend fun fetchDashboardStatistics(): TransactionDashboard {
         return api.fetchDashboardStatistics()
     }
 

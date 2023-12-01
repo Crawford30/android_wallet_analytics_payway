@@ -1,6 +1,7 @@
 package com.example.mobilewalletanalytics.apis
 
 import com.example.mobilewalletanalytics.data.models.Transaction
+import com.example.mobilewalletanalytics.data.models.TransactionDashboard
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -35,6 +36,6 @@ interface Api {
      * Returns a list of [Transaction].
      */
     @GET("api/dashboard")
-    suspend fun fetchDashboardStatistics(): List<Transaction>
+    suspend fun fetchDashboardStatistics(): TransactionDashboard
 
 }
