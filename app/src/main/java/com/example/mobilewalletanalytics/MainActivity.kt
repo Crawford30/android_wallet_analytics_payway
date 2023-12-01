@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.menuHistory -> {
+
                     navController.navigate(R.id.transactionsListFragment)
                     true
                 }
