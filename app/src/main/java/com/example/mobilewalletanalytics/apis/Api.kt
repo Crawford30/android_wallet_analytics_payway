@@ -16,7 +16,7 @@ interface Api {
      * Returns a list of [Transaction].
      */
     @GET("api/transactions")
-    suspend fun fetchAllTransactions(): List<Transaction>
+    suspend fun fetchAllTransactions(@Query("_start") start: Int, @Query("_limit") limit: Int): List<Transaction>
 
 
     /**

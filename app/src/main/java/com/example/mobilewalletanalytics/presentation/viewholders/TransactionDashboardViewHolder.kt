@@ -17,13 +17,18 @@ import com.google.android.material.textview.MaterialTextView
 class TransactionDashboardViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private val categoryTextView: MaterialTextView = view.findViewById(R.id.category_label)
-    private val transactionWithdrawalAmountTextView: MaterialTextView = view.findViewById(R.id.withdrawal_transaction_amount)
-    private val transactionDepositAmountTextView: MaterialTextView = view.findViewById(R.id.deposit_transaction_amount)
+    private val transactionWithdrawalAmountTextView: MaterialTextView =
+        view.findViewById(R.id.withdrawal_transaction_amount)
+    private val transactionDepositAmountTextView: MaterialTextView =
+        view.findViewById(R.id.deposit_transaction_amount)
     private val imagePlaceholder: ImageView = view.findViewById(R.id.dashboard_image_place_holder)
 
 
-    fun bindTo(transaction: CategoryBreakdown?, onItemClicked: (transaction: CategoryBreakdown) -> Unit){
-        if(transaction != null){
+    fun bindTo(
+        transaction: CategoryBreakdown?,
+        onItemClicked: (transaction: CategoryBreakdown) -> Unit
+    ) {
+        if (transaction != null) {
 //            val categoryBreakdown = transaction.get(absoluteAdapterPosition)
             categoryTextView.text = transaction.category
 
@@ -55,17 +60,14 @@ class TransactionDashboardViewHolder(private val view: View) : RecyclerView.View
                 }
             }
 
-            transactionDepositAmountTextView.text = "${formatNumberToThousands(transaction.deposit_amount.toLong())} UGX"
+            transactionDepositAmountTextView.text =
+                "${formatNumberToThousands(transaction.deposit_amount.toLong())} UGX"
             transactionDepositAmountTextView.setTextColor(Color.GREEN)
-
-            transactionWithdrawalAmountTextView.text = "-${formatNumberToThousands(transaction.withdrawal_amount.toLong())} UGX"
+            transactionWithdrawalAmountTextView.text =
+                "-${formatNumberToThousands(transaction.withdrawal_amount.toLong())} UGX"
             transactionWithdrawalAmountTextView.setTextColor(Color.RED)
 
-
-//            detailsBtn.setOnClickListener {
-//                onItemClicked.invoke(user)
-//            }
-        }else{
+        } else {
             categoryTextView.text = ""
             transactionDepositAmountTextView.text = ""
             transactionWithdrawalAmountTextView.text = ""
@@ -76,7 +78,8 @@ class TransactionDashboardViewHolder(private val view: View) : RecyclerView.View
     companion object {
         fun create(parent: ViewGroup): TransactionDashboardViewHolder {
             return TransactionDashboardViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.row_item_dashboard_layout, parent, false)
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.row_item_dashboard_layout, parent, false)
             )
         }
     }

@@ -51,7 +51,7 @@ object NetworkModule {
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
 
-       println("BUILDER: $retrofitBuilder")
+        println("BUILDER: $retrofitBuilder")
         return retrofitBuilder.build()
     }
 
@@ -59,8 +59,8 @@ object NetworkModule {
      * Provide the [Api] which uses a [Retrofit] instance to make network calls
      */
     @Provides
-    fun providesApi(retrofit: Retrofit): Api{
-        return  retrofit.create(Api::class.java)
+    fun providesApi(retrofit: Retrofit): Api {
+        return retrofit.create(Api::class.java)
     }
 
 }

@@ -1,8 +1,11 @@
 package com.example.mobilewalletanalytics.data.remote_repo
 
+import androidx.lifecycle.LiveData
+import androidx.paging.*
 import com.example.mobilewalletanalytics.apis.Api
 import com.example.mobilewalletanalytics.data.models.Transaction
 import com.example.mobilewalletanalytics.data.models.TransactionDashboard
+import com.example.mobilewalletanalytics.data.pagingsource.TransactionsPagingSource
 import com.example.mobilewalletanalytics.data.remote_interfaces.RemoteRepo
 import javax.inject.Inject
 
@@ -13,11 +16,25 @@ import javax.inject.Inject
 class RemoteRepoImpl @Inject constructor(val api: Api) : RemoteRepo {
 
     /**
-     * Performs an api call to fetch all transactions.
-     * Returns a list of transaction.
+     * Configuration for the [PagingSource]
      */
-    override suspend fun fetchAllTransactions(): List<Transaction> {
-      return api.fetchAllTransactions()
+    private val pagingConfig = PagingConfig(
+        pageSize = 30
+    )
+
+
+    /**
+     * Performs an api call to fetch all transactions (which are paged).
+     * Returns a list of transaction.
+     * The [Pager] creates livedata by calling the load() method from the [PagingSource].
+     * The [pagingConfig] configures the parameters for the [PagingSource]
+     */
+    override fun fetchAllTransactions(): LiveData<PagingData<Transaction>> {
+        return Pager(
+            pagingConfig
+        ){
+            TransactionsPagingSource(api)
+        }.liveData
     }
 
     /**

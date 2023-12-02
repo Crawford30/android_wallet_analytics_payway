@@ -15,15 +15,14 @@ import com.google.android.material.textview.MaterialTextView
 class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val categoryTextView: MaterialTextView = view.findViewById(R.id.category)
     private val serviceTextView: MaterialTextView = view.findViewById(R.id.service)
-    private val transactionDateTextView: MaterialTextView = view.findViewById(R.id.withdrawal_transaction_amount)
-    private val transactionAmountTextView: MaterialTextView = view.findViewById(R.id.deposit_transaction_amount)
+    private val transactionDateTextView: MaterialTextView =
+        view.findViewById(R.id.withdrawal_transaction_amount)
+    private val transactionAmountTextView: MaterialTextView =
+        view.findViewById(R.id.deposit_transaction_amount)
     private val imagePlaceholder: ImageView = view.findViewById(R.id.dashboard_image_place_holder)
 
-//    private val detailsBtn: MaterialButton = view.findViewById(R.id.details)
-
-
-    fun bindTo(transaction: Transaction?, onItemClicked: (transaction:  Transaction) -> Unit){
-        if(transaction != null){
+    fun bindTo(transaction: Transaction?, onItemClicked: (transaction: Transaction) -> Unit) {
+        if (transaction != null) {
             categoryTextView.text = transaction.category
             serviceTextView.text = transaction.service
             transactionDateTextView.text = formatTimestamp(transaction.tx_finish)
@@ -58,11 +57,13 @@ class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHo
 
 
 
-            if(transaction.type == "Deposit"){
-                transactionAmountTextView.text = "${formatNumberToThousands(transaction.amount.toLong())} UGX"
+            if (transaction.type == "Deposit") {
+                transactionAmountTextView.text =
+                    "${formatNumberToThousands(transaction.amount.toLong())} UGX"
                 transactionAmountTextView.setTextColor(Color.GREEN)
-            }else {
-                transactionAmountTextView.text = "-${formatNumberToThousands(transaction.amount.toLong())} UGX"
+            } else {
+                transactionAmountTextView.text =
+                    "-${formatNumberToThousands(transaction.amount.toLong())} UGX"
                 transactionAmountTextView.setTextColor(Color.RED)
             }
 
@@ -70,7 +71,7 @@ class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHo
 //            detailsBtn.setOnClickListener {
 //                onItemClicked.invoke(user)
 //            }
-        }else{
+        } else {
             categoryTextView.text = ""
             serviceTextView.text = ""
             transactionDateTextView.text = ""

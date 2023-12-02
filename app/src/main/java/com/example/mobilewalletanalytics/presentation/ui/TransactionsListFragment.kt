@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.mobilewalletanalytics.R
 import com.example.mobilewalletanalytics.databinding.FragmentTransactionsListBinding
 import com.example.mobilewalletanalytics.presentation.adapters.TransactionHistoryAdapter
@@ -37,15 +34,13 @@ class TransactionsListFragment : Fragment() {
     ): View? {
 
         binding = FragmentTransactionsListBinding.inflate(inflater, container, false)
-        adapter = TransactionHistoryAdapter(binding!!.progressBar){
+        adapter = TransactionHistoryAdapter(binding!!.progressBar) {
 //            val action = UsersListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(it)
 //            findNavController().navigate(action)
         }
         binding?.transactionsHistoryRecyclerView?.adapter = adapter
         return binding?.root
-
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_transactions_list, container, false)
+        return inflater.inflate(R.layout.fragment_transactions_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +48,7 @@ class TransactionsListFragment : Fragment() {
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Transactions History"
         viewLifecycleOwner.lifecycleScope.launch {
-            appViewModel.usersLiveData.observe(viewLifecycleOwner){
+            appViewModel.transactionLiveData.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
         }

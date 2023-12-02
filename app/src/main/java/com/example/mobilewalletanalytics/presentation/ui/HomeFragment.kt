@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        adapter = TransactionDashboardAdapter(binding!!.progressBar){
+        adapter = TransactionDashboardAdapter(binding!!.progressBar) {
         }
 
         binding?.transactionDashboardRecycler?.adapter = adapter
@@ -48,19 +48,17 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Dashboard Statistics"
 
-        binding?.transactionDashboardRecycler?.apply{
+        binding?.transactionDashboardRecycler?.apply {
             layoutManager = LinearLayoutManager(activity)
             val topSPacingDecoration = TopSpacingItemDecoration(20)
             addItemDecoration(topSPacingDecoration)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            appViewModel.dashboardLiveData.observe(viewLifecycleOwner){
+            appViewModel.dashboardLiveData.observe(viewLifecycleOwner) {
 //                println("DASHBOARD: ${it}")
-
                 val balance = it.total_deposits.toLong() - it.total_withdrawals.toLong()
                 binding?.balanceTextView?.text = "${formatNumberToThousands((balance))} UGX"
-
                 adapter.submitList(it.category_breakdown)
 
             }

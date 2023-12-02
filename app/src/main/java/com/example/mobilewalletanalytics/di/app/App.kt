@@ -7,7 +7,7 @@ import dagger.hilt.android.HiltAndroidApp
 import java.io.File
 
 @HiltAndroidApp
-class App: Application() {
+class App : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)

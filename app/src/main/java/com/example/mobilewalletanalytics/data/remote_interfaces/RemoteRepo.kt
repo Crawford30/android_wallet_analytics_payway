@@ -1,6 +1,7 @@
 package com.example.mobilewalletanalytics.data.remote_interfaces
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.example.mobilewalletanalytics.data.models.Transaction
 import com.example.mobilewalletanalytics.data.models.TransactionDashboard
 
@@ -12,7 +13,8 @@ interface RemoteRepo {
     /**
      * fetch all transactions
      */
-    suspend fun fetchAllTransactions(): List<Transaction>
+     fun fetchAllTransactions():  LiveData<PagingData<Transaction>>
+
 
     /**
      * fetch  transactions history

@@ -2,9 +2,9 @@ package com.example.mobilewalletanalytics.presentation.adapters
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilewalletanalytics.data.models.Transaction
-import com.example.mobilewalletanalytics.presentation.viewholders.TransactionDashboardViewHolder
 import com.example.mobilewalletanalytics.presentation.viewholders.TransactionHistoryViewHolder
 import com.google.android.material.progressindicator.CircularProgressIndicator
 

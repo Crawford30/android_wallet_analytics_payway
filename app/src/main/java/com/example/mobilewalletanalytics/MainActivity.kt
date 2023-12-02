@@ -60,10 +60,13 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.homeFragment)
                     true
                 }
-
                 R.id.menuHistory -> {
-
                     navController.navigate(R.id.transactionsListFragment)
+                    true
+                }
+
+                R.id.menuAllTransactions -> {
+                    navController.navigate(R.id.allTransactionsFragment)
                     true
                 }
 

@@ -39,7 +39,7 @@ fun generateAbbreviation(name: String): String {
 /**
  * Adding top decoration to recycler view
  */
-class TopSpacingItemDecoration(private val padding:Int): RecyclerView.ItemDecoration() {
+class TopSpacingItemDecoration(private val padding: Int) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
         super.getItemOffsets(outRect, itemPosition, parent)
         outRect.top = padding
