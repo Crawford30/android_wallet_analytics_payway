@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobilewalletanalytics.R
 import com.example.mobilewalletanalytics.databinding.FragmentHomeBinding
 import com.example.mobilewalletanalytics.databinding.FragmentTransactionsListBinding
+import com.example.mobilewalletanalytics.presentation.adapters.DailyTransactionsAdapter
 import com.example.mobilewalletanalytics.presentation.adapters.TransactionDashboardAdapter
 import com.example.mobilewalletanalytics.presentation.adapters.TransactionHistoryAdapter
 import com.example.mobilewalletanalytics.presentation.viewmodels.AppViewModel
@@ -26,6 +27,8 @@ class HomeFragment : Fragment() {
     private var binding: FragmentHomeBinding? = null
     private lateinit var adapter: TransactionDashboardAdapter
 
+    private lateinit var dailyStatAdapter: DailyTransactionsAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +39,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        dailyStatAdapter = DailyTransactionsAdapter(binding!!.progressBar) {
+        }
         adapter = TransactionDashboardAdapter(binding!!.progressBar) {
         }
 
         binding?.transactionDashboardRecycler?.adapter = adapter
+        binding?.dailyDashboardRecycler?.adapter = dailyStatAdapter
         return binding?.root
     }
 
@@ -53,12 +59,21 @@ class HomeFragment : Fragment() {
             addItemDecoration(topSPacingDecoration)
         }
 
+        binding?.dailyDashboardRecycler?.apply {
+            layoutManager = LinearLayoutManager(activity)
+            val topSPacingDecoration = TopSpacingItemDecoration(20)
+            addItemDecoration(topSPacingDecoration)
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             appViewModel.dashboardLiveData.observe(viewLifecycleOwner) {
 //                println("DASHBOARD: ${it}")
                 val balance = it.total_deposits.toLong() - it.total_withdrawals.toLong()
                 binding?.balanceTextView?.text = "${formatNumberToThousands((balance))} UGX"
                 adapter.submitList(it.category_breakdown)
+                dailyStatAdapter.submitList(it.daily_statistics)
+
+                print("DAILY STAT: ${it.daily_statistics}")
 
             }
         }

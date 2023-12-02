@@ -13,13 +13,13 @@ import com.example.mobilewalletanalytics.utils.formatTimestamp
 import com.google.android.material.textview.MaterialTextView
 
 class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    private val categoryTextView: MaterialTextView = view.findViewById(R.id.category)
-    private val serviceTextView: MaterialTextView = view.findViewById(R.id.service)
+    private val categoryTextView: MaterialTextView = view.findViewById(R.id.transaction_history_category)
+    private val serviceTextView: MaterialTextView = view.findViewById(R.id.transaction_history_service)
     private val transactionDateTextView: MaterialTextView =
-        view.findViewById(R.id.withdrawal_transaction_amount)
+        view.findViewById(R.id.transaction_history_withdrawal_amount)
     private val transactionAmountTextView: MaterialTextView =
-        view.findViewById(R.id.deposit_transaction_amount)
-    private val imagePlaceholder: ImageView = view.findViewById(R.id.dashboard_image_place_holder)
+        view.findViewById(R.id.transaction_history_deposit_amount)
+    private val imagePlaceholder: ImageView = view.findViewById(R.id.transaction_history_image_place_holder)
 
     fun bindTo(transaction: Transaction?, onItemClicked: (transaction: Transaction) -> Unit) {
         if (transaction != null) {
@@ -83,7 +83,7 @@ class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHo
     companion object {
         fun create(parent: ViewGroup): TransactionHistoryViewHolder {
             return TransactionHistoryViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.row_item_layout, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.row_item_transaction_history_layout, parent, false)
             )
         }
     }

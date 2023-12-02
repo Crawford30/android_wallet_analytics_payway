@@ -8,10 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilewalletanalytics.R
 import com.example.mobilewalletanalytics.data.models.CategoryBreakdown
-import com.example.mobilewalletanalytics.data.models.Transaction
-import com.example.mobilewalletanalytics.data.models.TransactionDashboard
 import com.example.mobilewalletanalytics.utils.formatNumberToThousands
-import com.example.mobilewalletanalytics.utils.formatTimestamp
 import com.google.android.material.textview.MaterialTextView
 
 class TransactionDashboardViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

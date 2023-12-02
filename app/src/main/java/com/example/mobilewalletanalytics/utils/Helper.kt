@@ -3,6 +3,7 @@ package com.example.mobilewalletanalytics.utils
 import android.graphics.Rect
 import androidx.recyclerview.widget.RecyclerView
 import java.text.DecimalFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,13 +20,33 @@ fun formatNumberToThousands(number: Long): String {
 /**
  * Date formatter into readable form
  */
-fun formatTimestamp(dateString: String): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("dd/MMM/yyyy 'at' hh:mm a", Locale.getDefault())
 
-    val date = inputFormat.parse(dateString)
-    return if (date != null) outputFormat.format(date) else "Invalid Date"
+
+fun formatTimestamp(dateString: String): String {
+    val inputFormats = arrayOf(
+        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()),
+        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    )
+
+    for (inputFormat in inputFormats) {
+        try {
+            val date = inputFormat.parse(dateString)
+            if (date != null) {
+                val outputFormat = if (inputFormat.toPattern() == "yyyy-MM-dd") {
+                    SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault())
+                } else {
+                    SimpleDateFormat("dd/MMM/yyyy 'at' hh:mm a", Locale.getDefault())
+                }
+                return outputFormat.format(date)
+            }
+        } catch (e: ParseException) {
+
+        }
+    }
+
+    return "Invalid Date"
 }
+
 
 /**
  * Generate Placeholders from Sentence for example Airtel Internet would be AI
