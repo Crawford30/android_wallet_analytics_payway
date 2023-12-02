@@ -70,7 +70,14 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                // Add more cases for other menu items if needed
+                R.id.menuChart -> {
+                    navController.navigate(R.id.chartFragment)
+                    true
+                }
+
+
+
+
 
                 else -> false
             }

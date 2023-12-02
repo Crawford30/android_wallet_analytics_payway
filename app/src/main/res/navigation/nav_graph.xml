@@ -18,4 +18,9 @@
         android:name="com.example.mobilewalletanalytics.presentation.ui.AllTransactionsFragment"
         android:label="fragment_all_transactions"
         tools:layout="@layout/fragment_all_transactions" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.example.mobilewalletanalytics.presentation.ui.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" />
 </navigation>
