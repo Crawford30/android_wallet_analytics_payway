@@ -32,11 +32,8 @@ class TransactionsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentTransactionsListBinding.inflate(inflater, container, false)
         adapter = TransactionHistoryAdapter(binding!!.progressBar) {
-//            val action = UsersListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(it)
-//            findNavController().navigate(action)
         }
         binding?.transactionsHistoryRecyclerView?.adapter = adapter
         return binding?.root
@@ -64,6 +61,5 @@ class TransactionsListFragment : Fragment() {
         @JvmStatic
         fun newInstance() = TransactionsListFragment()
     }
-
 
 }

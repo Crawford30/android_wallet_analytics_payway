@@ -40,8 +40,6 @@ class AllTransactionsFragment : Fragment() {
     ): View? {
         binding = FragmentAllTransactionsBinding.inflate(inflater, container, false)
         adapter = TransactionsPagingAdapter(binding!!.progressBar){
-//            val action = PostsListFragmentDirections.actionPostsListFragmentToCommentsListFragment(it.id)
-//            findNavController().navigate(action)
         }
         binding?.allTransactionsRecyclerView?.adapter = adapter
 
