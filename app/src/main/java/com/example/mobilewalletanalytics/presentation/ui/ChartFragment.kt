@@ -183,7 +183,7 @@ class ChartFragment : Fragment() {
                  */
                 Toast.makeText(
                     requireContext(),
-                    "Chart data exported to Excel ${file.absoluteFile}",
+                    "Chart data exported to Excel ${file.absoluteFile}. Please check for the name in your file explorer app or document directory",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -358,6 +358,7 @@ class ChartFragment : Fragment() {
          */
         binding?.barChart?.data = data
 
+
         /**
          * X-axis configurations
          */
@@ -366,6 +367,7 @@ class ChartFragment : Fragment() {
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
         xAxis?.granularity = 1f
         xAxis?.setCenterAxisLabels(true)
+
 
         /**
          * X-axis label configurations
@@ -387,8 +389,14 @@ class ChartFragment : Fragment() {
         val legend = binding?.barChart?.legend
         legend?.isEnabled = true
         legend?.form = Legend.LegendForm.SQUARE
-
         binding?.barChart?.legend?.isEnabled = true
+
+        /**
+         * Set a larger initial scale to make it visible
+         * for large data sets
+         */
+        binding?.barChart?.setVisibleXRangeMaximum(10f)
+
         binding?.barChart?.invalidate()
     }
 
