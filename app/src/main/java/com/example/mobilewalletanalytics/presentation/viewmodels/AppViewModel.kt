@@ -17,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor(private val remoteRepo: RemoteRepo) : ViewModel() {
 
-
     /**
      * All transactions history are fetched from here. There's no pagination here since the users are few(10)
      */
