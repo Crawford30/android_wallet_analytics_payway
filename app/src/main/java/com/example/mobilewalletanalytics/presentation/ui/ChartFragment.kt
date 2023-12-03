@@ -1,3 +1,5 @@
+package com.example.mobilewalletanalytics.presentation.ui
+
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -24,8 +26,6 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
 
 
 class ChartFragment : Fragment() {
@@ -50,6 +50,7 @@ class ChartFragment : Fragment() {
 
         appViewModel.allTransactionLiveData.observe(viewLifecycleOwner) { data ->
             viewLifecycleOwner.lifecycleScope.launch {
+
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         parentView: AdapterView<*>?,
@@ -58,13 +59,17 @@ class ChartFragment : Fragment() {
                         id: Long
                     ) {
                         val selectedOption = parentView?.getItemAtPosition(position).toString()
-                        filterChartData(selectedOption, data)
+                        filterChartData(
+                            selectedOption,
+                            appViewModel.allTransactionLiveData.value.orEmpty()
+                        )
                     }
 
                     override fun onNothingSelected(parentView: AdapterView<*>?) {
                         // Do nothing
                     }
                 }
+
 
                 // Initial load with the default selection
                 filterChartData("All", data)
@@ -80,14 +85,12 @@ class ChartFragment : Fragment() {
         val withdrawalEntries = mutableListOf<BarEntry>()
         var currentIndex = 0
 
-        /**
-         * Group the transaction data based on the transaction [type] which can be  [Deposit] or [Withdraw]
-         */
         groupedData.forEach { (_, dailyTransactions) ->
             val depositAmount = dailyTransactions.filter { it.type == "Deposit" }
                 .sumByDouble { it.amount.toDouble() }
             val withdrawalAmount = dailyTransactions.filter { it.type == "Withdraw" }
                 .sumByDouble { it.amount.toDouble() }
+
             if (selection == "All" || (selection == "Deposit" && depositAmount > 0) || (selection == "Withdrawal" && withdrawalAmount > 0)) {
                 depositEntries.add(BarEntry(currentIndex.toFloat(), depositAmount.toFloat()))
                 withdrawalEntries.add(BarEntry(currentIndex.toFloat(), withdrawalAmount.toFloat()))
@@ -96,39 +99,35 @@ class ChartFragment : Fragment() {
             }
         }
 
-        /**
-         *  [Deposit] dataset configuration with its label color set to [Green]
-         */
         val depositDataSet = BarDataSet(depositEntries, "Deposit")
         depositDataSet.color = Color.parseColor("#4CAF50") // Green for Deposit
 
-        /**
-         *  [Withdrawal] dataset configuration with its label color set to [Red]
-         */
         val withdrawalDataSet = BarDataSet(withdrawalEntries, "Withdrawal")
         withdrawalDataSet.color = Color.parseColor("#F44336") // Red for Withdrawal
 
         var data = BarData(depositDataSet, withdrawalDataSet)
 
-        /**
-         * Description, change it based on user selection of the type
-         */
+        // Description
         val description = Description()
         when (selection) {
             "All" -> {
                 description.text = "Daily Deposit and Withdrawal Amount"
+                data = BarData(depositDataSet, withdrawalDataSet)
                 description.setPosition(600f, 16f)
             }
             "Deposit" -> {
                 description.text = "Daily Deposit Amount"
+                data = BarData(depositDataSet)
                 description.setPosition(500f, 16f)
             }
             "Withdrawal" -> {
                 description.text = "Daily Withdrawal Amount"
+                data = BarData(withdrawalDataSet)
                 description.setPosition(500f, 16f)
             }
             else -> {
                 description.text = "Daily Deposit and Withdrawal Amount"
+                data = BarData(depositDataSet, withdrawalDataSet)
                 description.setPosition(600f, 16f)
             }
         }
@@ -137,42 +136,34 @@ class ChartFragment : Fragment() {
         description.textSize = 12f
         binding?.barChart?.description = description
 
-        /**
-         * Set Date data as x-axis data
-         */
+        // Set data
         binding?.barChart?.data = data
 
-        /**
-         * X-axis configurations
-         */
+        // X-axis
         val xAxis = binding?.barChart?.xAxis
         xAxis?.valueFormatter = IndexAxisValueFormatter(categories)
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
         xAxis?.granularity = 1f
-        xAxis?.setCenterAxisLabels(true)
+        xAxis?.setCenterAxisLabels(true)  // Set to true to center labels below bars
 
-        /**
-         * X-axis label configurations
-         */
+        // Further customize the position of X-axis labels
         xAxis?.setLabelCount(categories.size, true)
         xAxis?.setDrawGridLines(false)
         xAxis?.setAvoidFirstLastClipping(true)
         xAxis?.labelRotationAngle = -45f // Rotate labels for better readability
 
-        /**
-         * Y-axis
-         */
+        // Y-axis
         binding?.barChart?.axisLeft?.axisMinimum = 0f
         binding?.barChart?.axisRight?.isEnabled = false
 
-        /**
-         * Legend configurations
-         */
+        // Legend
         val legend = binding?.barChart?.legend
         legend?.isEnabled = true
         legend?.form = Legend.LegendForm.SQUARE
 
+        // Further customization as needed
         binding?.barChart?.legend?.isEnabled = true
+
         binding?.barChart?.invalidate()
     }
 
