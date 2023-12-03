@@ -57,4 +57,8 @@ class RemoteRepoImpl @Inject constructor(val api: Api) : RemoteRepo {
         return api.fetchDashboardStatistics()
     }
 
+    override suspend fun fetchAllUserTransactions(): List<Transaction> {
+        return  api.fetchAllData()
+    }
+
 }

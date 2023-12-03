@@ -27,4 +27,9 @@ interface RemoteRepo {
      */
     suspend fun fetchDashboardStatistics(): TransactionDashboard
 
+
+    suspend fun fetchAllUserTransactions(): List<Transaction>
+
+
+
 }

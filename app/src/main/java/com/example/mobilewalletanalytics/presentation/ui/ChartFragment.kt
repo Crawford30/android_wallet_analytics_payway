@@ -1,65 +1,197 @@
-package com.example.mobilewalletanalytics.presentation.ui
-
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.mobilewalletanalytics.R
+import com.example.mobilewalletanalytics.data.models.Transaction
+import com.example.mobilewalletanalytics.databinding.FragmentChartBinding
+import com.example.mobilewalletanalytics.presentation.viewmodels.AppViewModel
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ChartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ChartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var binding: FragmentChartBinding? = null
+    private val appViewModel: AppViewModel by activityViewModels()
+    private lateinit var spinner: Spinner
+    private var categories = mutableListOf<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Chart Statistics"
+
+        spinner = binding?.spinnerFilter ?: view.findViewById(R.id.spinnerFilter)
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.transaction_types,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
+
+        appViewModel.allTransactionLiveData.observe(viewLifecycleOwner) { data ->
+            viewLifecycleOwner.lifecycleScope.launch {
+                spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parentView: AdapterView<*>?,
+                        selectedItemView: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val selectedOption = parentView?.getItemAtPosition(position).toString()
+                        filterChartData(selectedOption, data)
+                    }
+
+                    override fun onNothingSelected(parentView: AdapterView<*>?) {
+                        // Do nothing
+                    }
+                }
+
+                // Initial load with the default selection
+                filterChartData("All", data)
+            }
+        }
     }
+
+    private fun filterChartData(selection: String, data: List<Transaction>) {
+        categories.clear()  // Clear existing categories before populating
+
+        val groupedData = data.groupBy { it.tx_finish.substring(0, 10) }
+        val depositEntries = mutableListOf<BarEntry>()
+        val withdrawalEntries = mutableListOf<BarEntry>()
+        var currentIndex = 0
+
+        /**
+         * Group the transaction data based on the transaction [type] which can be  [Deposit] or [Withdraw]
+         */
+        groupedData.forEach { (_, dailyTransactions) ->
+            val depositAmount = dailyTransactions.filter { it.type == "Deposit" }
+                .sumByDouble { it.amount.toDouble() }
+            val withdrawalAmount = dailyTransactions.filter { it.type == "Withdraw" }
+                .sumByDouble { it.amount.toDouble() }
+            if (selection == "All" || (selection == "Deposit" && depositAmount > 0) || (selection == "Withdrawal" && withdrawalAmount > 0)) {
+                depositEntries.add(BarEntry(currentIndex.toFloat(), depositAmount.toFloat()))
+                withdrawalEntries.add(BarEntry(currentIndex.toFloat(), withdrawalAmount.toFloat()))
+                categories.add(dailyTransactions.first().tx_finish.substring(0, 10))
+                currentIndex++
+            }
+        }
+
+        /**
+         *  [Deposit] dataset configuration with its label color set to [Green]
+         */
+        val depositDataSet = BarDataSet(depositEntries, "Deposit")
+        depositDataSet.color = Color.parseColor("#4CAF50") // Green for Deposit
+
+        /**
+         *  [Withdrawal] dataset configuration with its label color set to [Red]
+         */
+        val withdrawalDataSet = BarDataSet(withdrawalEntries, "Withdrawal")
+        withdrawalDataSet.color = Color.parseColor("#F44336") // Red for Withdrawal
+
+        var data = BarData(depositDataSet, withdrawalDataSet)
+
+        /**
+         * Description, change it based on user selection of the type
+         */
+        val description = Description()
+        when (selection) {
+            "All" -> {
+                description.text = "Daily Deposit and Withdrawal Amount"
+                description.setPosition(600f, 16f)
+            }
+            "Deposit" -> {
+                description.text = "Daily Deposit Amount"
+                description.setPosition(500f, 16f)
+            }
+            "Withdrawal" -> {
+                description.text = "Daily Withdrawal Amount"
+                description.setPosition(500f, 16f)
+            }
+            else -> {
+                description.text = "Daily Deposit and Withdrawal Amount"
+                description.setPosition(600f, 16f)
+            }
+        }
+        description.textColor = Color.BLACK
+        description.typeface = Typeface.DEFAULT_BOLD
+        description.textSize = 12f
+        binding?.barChart?.description = description
+
+        /**
+         * Set Date data as x-axis data
+         */
+        binding?.barChart?.data = data
+
+        /**
+         * X-axis configurations
+         */
+        val xAxis = binding?.barChart?.xAxis
+        xAxis?.valueFormatter = IndexAxisValueFormatter(categories)
+        xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        xAxis?.granularity = 1f
+        xAxis?.setCenterAxisLabels(true)
+
+        /**
+         * X-axis label configurations
+         */
+        xAxis?.setLabelCount(categories.size, true)
+        xAxis?.setDrawGridLines(false)
+        xAxis?.setAvoidFirstLastClipping(true)
+        xAxis?.labelRotationAngle = -45f // Rotate labels for better readability
+
+        /**
+         * Y-axis
+         */
+        binding?.barChart?.axisLeft?.axisMinimum = 0f
+        binding?.barChart?.axisRight?.isEnabled = false
+
+        /**
+         * Legend configurations
+         */
+        val legend = binding?.barChart?.legend
+        legend?.isEnabled = true
+        legend?.form = Legend.LegendForm.SQUARE
+
+        binding?.barChart?.legend?.isEnabled = true
+        binding?.barChart?.invalidate()
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chart, container, false)
+        binding = FragmentChartBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(param1: String, param2: String) = ChartFragment().apply {
+            // If needed, you can pass arguments to the fragment here
+        }
     }
 }

@@ -27,10 +27,11 @@ class AppViewModel @Inject constructor(private val remoteRepo: RemoteRepo) : Vie
     private val _transactionsDashboardData = MutableLiveData<TransactionDashboard>()
 
     // LiveData for all transactions (PagingData)
-    private val _allTransactionLiveData = MutableLiveData<PagingData<Transaction>>()
+    private val _allTransactionLiveData = MutableLiveData<List<Transaction>>()
 
 
     val transactionLiveData: LiveData<List<Transaction>> get() = _transactionsHistoryLiveData
+    val allTransactionLiveData: LiveData<List<Transaction>> get() = _allTransactionLiveData
     val dashboardLiveData: LiveData<TransactionDashboard> get() = _transactionsDashboardData
     val allTransactions: LiveData<PagingData<Transaction>> get() = remoteRepo.fetchAllTransactions()
 
@@ -39,6 +40,7 @@ class AppViewModel @Inject constructor(private val remoteRepo: RemoteRepo) : Vie
             _transactionsHistoryLiveData.value =
                 remoteRepo.fetchTransactionsHistory("2023-10-01 08:33:57", "2023-10-01 11:29:55")
             _transactionsDashboardData.value = remoteRepo.fetchDashboardStatistics()
+            _allTransactionLiveData.value = remoteRepo.fetchAllUserTransactions()
         }
     }
 

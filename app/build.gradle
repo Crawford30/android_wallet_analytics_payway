@@ -41,6 +41,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+    repositories {
+
+        maven { url "https://jitpack.io" }
+    }
 
     kapt {
         generateStubs = true
@@ -78,6 +82,9 @@ dependencies {
 
     //CardView
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //Charting Library
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //Recyclerview
     implementation "androidx.recyclerview:recyclerview:1.1.0"
@@ -147,5 +154,8 @@ dependencies {
 
     testImplementation 'org.mockito:mockito-core:3.11.2'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:3.0.0'
+
+
+
 
 }

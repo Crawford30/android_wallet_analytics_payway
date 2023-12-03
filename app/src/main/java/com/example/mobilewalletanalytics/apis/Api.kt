@@ -38,4 +38,7 @@ interface Api {
     @GET("api/dashboard")
     suspend fun fetchDashboardStatistics(): TransactionDashboard
 
+    @GET("api/transactions")
+    suspend fun fetchAllData(): List<Transaction>
+
 }
