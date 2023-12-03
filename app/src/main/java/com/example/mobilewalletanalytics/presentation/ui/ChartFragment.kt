@@ -1,15 +1,22 @@
 package com.example.mobilewalletanalytics.presentation.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
+import android.media.MediaScannerConnection
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,13 +33,21 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import kotlinx.coroutines.launch
+import org.apache.poi.ss.usermodel.Sheet
+import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import java.io.File
+import java.io.FileOutputStream
 
 
 class ChartFragment : Fragment() {
     private var binding: FragmentChartBinding? = null
     private val appViewModel: AppViewModel by activityViewModels()
     private lateinit var spinner: Spinner
+    private var selectedOption: String = "All"
     private var categories = mutableListOf<String>()
+    private val depositEntries = mutableListOf<BarEntry>()
+    private val withdrawalEntries = mutableListOf<BarEntry>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,7 +72,7 @@ class ChartFragment : Fragment() {
                         position: Int,
                         id: Long
                     ) {
-                        val selectedOption = parentView?.getItemAtPosition(position).toString()
+                        selectedOption = parentView?.getItemAtPosition(position).toString()
                         filterChartData(selectedOption, data)
                     }
 
@@ -66,18 +81,215 @@ class ChartFragment : Fragment() {
                     }
                 }
 
-                // Initial load with the default selection
+                /**
+                 * Initial load with default selection as [All]
+                 */
                 filterChartData("All", data)
+            }
+        }
+
+        view.findViewById<Button>(R.id.btnExport).setOnClickListener {
+            if (checkPermission()) {
+                exportChartDataToExcel(
+                    selectedOption,
+                    categories,
+                    depositEntries,
+                    withdrawalEntries
+                )
+            } else {
+                requestPermission()
             }
         }
     }
 
+    /**
+     * Function to export the data to excel
+     */
+    private fun exportChartDataToExcel(
+        selection: String,
+        categories: List<String>,
+        depositEntries: List<BarEntry>,
+        withdrawalEntries: List<BarEntry>
+    ) {
+        try {
+            /**
+             * Create a new workbook
+             */
+            val workbook: Workbook = XSSFWorkbook()
+            val sheet = workbook.createSheet("Chart Data")
+
+            /**
+             * Create the header row
+             */
+            val headerRow = sheet.createRow(0)
+
+
+            /**
+             * Handle different scenario based on user selection
+             */
+            when (selection) {
+                "Deposit" -> {
+                    headerRow.createCell(0).setCellValue("Transaction Date")
+                    headerRow.createCell(1).setCellValue("Deposit Amount")
+                    addDataRows(sheet, categories, depositEntries, withdrawalEntries, "Deposit")
+                }
+                "Withdrawal" -> {
+                    headerRow.createCell(0).setCellValue("Transaction Date")
+                    headerRow.createCell(1).setCellValue("Withdrawal Amount")
+                    addDataRows(sheet, categories, depositEntries, withdrawalEntries, "Withdrawal")
+                }
+                "All" -> {
+                    headerRow.createCell(0).setCellValue("Transaction Date")
+                    headerRow.createCell(1).setCellValue("Deposit Amount")
+                    headerRow.createCell(2).setCellValue("Withdrawal Amount")
+                    addDataRows(sheet, categories, depositEntries, withdrawalEntries, "All")
+                }
+            }
+
+
+            /**
+             * Save the workbook to a file
+             */
+            val file = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                "chart_data.xlsx"
+            )
+
+
+
+            MediaScannerConnection.scanFile(
+                requireContext(),
+                arrayOf(file.absolutePath),
+                null,
+                null
+            )
+
+            Log.d("File Path", file.absolutePath)
+
+            val uri = FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.mobilewalletanalytics.fileprovider",
+                file
+            )
+
+            val fileOut = requireContext().contentResolver.openOutputStream(uri)
+
+            if (fileOut != null) {
+                workbook.write(fileOut)
+                fileOut.close()
+
+                /**
+                 * Providing feedback to the user using toast
+                 */
+                Toast.makeText(
+                    requireContext(),
+                    "Chart data exported to Excel ${file.absoluteFile}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(requireContext(), "Error exporting chart data", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Error exporting chart data", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    /**
+     * The function is used to dynamically update the excel column header based on filter applied, ie [Deposit] Only or [Withdraw] only or [Deposit]
+     * or [All] to represent both [Deposit] and [Withdraw]
+     */
+    private fun addDataRows(
+        sheet: Sheet,
+        categories: List<String>,
+        depositEntries: List<BarEntry>,
+        withdrawalEntries: List<BarEntry>,
+        selectedType: String
+    ) {
+        val columnIndex = when (selectedType) {
+            "Deposit" -> 1
+            "Withdrawal" -> 1
+            "All" -> 2
+            else -> 1
+        }
+
+        for (i in categories.indices) {
+            val dataRow = sheet.getRow(i + 1) ?: sheet.createRow(i + 1)
+            dataRow.createCell(0).setCellValue(categories[i])
+
+            when (selectedType) {
+                "Deposit" -> dataRow.createCell(columnIndex)
+                    .setCellValue(depositEntries[i].y.toDouble())
+                "Withdrawal" -> dataRow.createCell(columnIndex)
+                    .setCellValue(withdrawalEntries[i].y.toDouble())
+                "All" -> {
+                    dataRow.createCell(1).setCellValue(depositEntries[i].y.toDouble())
+                    dataRow.createCell(2).setCellValue(withdrawalEntries[i].y.toDouble())
+                }
+                else -> throw IllegalArgumentException("Invalid selected type: $selectedType")
+            }
+        }
+    }
+
+    /**
+     * Check for permission if GRANTED or not, and if not, request for it
+     */
+    private fun checkPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            REQUEST_PERMISSION_CODE
+        )
+    }
+
+
+    /**
+     * Requesting for file permission(to write to file)
+     */
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_PERMISSION_CODE && grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            /**
+             * if you requested MANAGE_EXTERNAL_STORAGE, you don't need to request WRITE_EXTERNAL_STORAGE separately
+             */
+            exportChartDataToExcel(
+                selectedOption,
+                categories,
+                depositEntries,
+                withdrawalEntries
+            )
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Permission denied. Cannot export chart data.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    /**
+     * This function filters out the chart based on [type] which can be  [Deposit] or [Withdraw]
+     */
     private fun filterChartData(selection: String, data: List<Transaction>) {
         categories.clear()  // Clear existing categories before populating
 
         val groupedData = data.groupBy { it.tx_finish.substring(0, 10) }
-        val depositEntries = mutableListOf<BarEntry>()
-        val withdrawalEntries = mutableListOf<BarEntry>()
         var currentIndex = 0
 
         /**
@@ -193,6 +405,8 @@ class ChartFragment : Fragment() {
     }
 
     companion object {
+        private const val REQUEST_PERMISSION_CODE = 1
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) = ChartFragment().apply {
             // If needed, you can pass arguments to the fragment here
