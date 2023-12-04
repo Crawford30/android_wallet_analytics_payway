@@ -32,7 +32,10 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -88,18 +91,48 @@ class ChartFragment : Fragment() {
             }
         }
 
-        view.findViewById<Button>(R.id.btnExport).setOnClickListener {
+        val exportButton = view.findViewById<Button>(R.id.btnExport)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+
+        exportButton.setOnClickListener {
             if (checkPermission()) {
-                exportChartDataToExcel(
-                    selectedOption,
-                    categories,
-                    depositEntries,
-                    withdrawalEntries
-                )
+                // Disable the button and show the progress bar
+                exportButton.isEnabled = false
+                progressBar.visibility = View.VISIBLE
+
+                // Perform the export operation asynchronously
+                GlobalScope.launch {
+                    exportChartDataToExcel(
+                        selectedOption,
+                        categories,
+                        depositEntries,
+                        withdrawalEntries
+                    )
+
+                    // Re-enable the button and hide the progress bar on the main/UI thread
+                    withContext(Dispatchers.Main) {
+                        exportButton.isEnabled = true
+                        progressBar.visibility = View.GONE
+                    }
+                }
             } else {
                 requestPermission()
             }
         }
+
+
+//        view.findViewById<Button>(R.id.btnExport).setOnClickListener {
+//            if (checkPermission()) {
+//                exportChartDataToExcel(
+//                    selectedOption,
+//                    categories,
+//                    depositEntries,
+//                    withdrawalEntries
+//                )
+//            } else {
+//                requestPermission()
+//            }
+//        }
     }
 
     /**
@@ -181,20 +214,28 @@ class ChartFragment : Fragment() {
                 /**
                  * Providing feedback to the user using toast
                  */
-                Toast.makeText(
-                    requireContext(),
-                    "Chart data exported to Excel ${file.absoluteFile}. Please check for the name in your file explorer app or document directory",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                activity?.runOnUiThread {
+                    Toast.makeText(
+                        requireContext(),
+                        "Chart data exported to Excel ${file.absoluteFile}. Please check for the name in your file explorer app or document directory",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             } else {
-                Toast.makeText(requireContext(), "Error exporting chart data", Toast.LENGTH_SHORT)
-                    .show()
+                activity?.runOnUiThread {
+                    Toast.makeText(requireContext(), "Error Exporting Chart", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(requireContext(), "Error exporting chart data", Toast.LENGTH_SHORT)
-                .show()
+            activity?.runOnUiThread {
+                Toast.makeText(requireContext(), "Error Exporting Chart", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
