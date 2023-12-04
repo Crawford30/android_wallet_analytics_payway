@@ -189,7 +189,10 @@ class ChartFragment : Fragment() {
             )
 
 
-
+            /**
+             * Used notify the system that a new file has been created or modified,
+             * and it should be added to the media database.
+             */
             MediaScannerConnection.scanFile(
                 requireContext(),
                 arrayOf(file.absolutePath),
@@ -197,7 +200,7 @@ class ChartFragment : Fragment() {
                 null
             )
 
-            Log.d("File Path", file.absolutePath)
+//            Log.d("File Path", file.absolutePath)
 
             val uri = FileProvider.getUriForFile(
                 requireContext(),
