@@ -200,7 +200,7 @@ class ChartFragment : Fragment() {
                 null
             )
 
-//            Log.d("File Path", file.absolutePath)
+//            Log.d("File Path", file.absolutePath) //for debugging purpose
 
             val uri = FileProvider.getUriForFile(
                 requireContext(),
