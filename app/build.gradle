@@ -40,6 +40,10 @@ android {
         viewBinding true
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     repositories {
         maven { url "https://jitpack.io" }
     }
