@@ -5,33 +5,38 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.ChartFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <Spinner
-            android:id="@+id/spinnerFilter"
+        android:layout_marginBottom="50dp"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:prompt="@string/select_type" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
-            android:layout_width="match_parent"
-            android:layout_height="470dp" />
+            <Spinner
+                android:id="@+id/spinnerFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:prompt="@string/select_type" />
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="480dp" />
 
-        <Button
-            android:id="@+id/btnExport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="14dp"
-            android:text="Export to Excel" />
-
-    </LinearLayout>
-
+            <Button
+                android:id="@+id/btnExport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="8dp"
+                android:text="Export to Excel" />
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
