@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
 
 
         /**
-         * Update the height in the layout parameters to a standard size
+         * Update the height in the layout parameters to a standard size.
          * Credit cards are 3.375 inches wide by 2.125 inches high
          *
          */
