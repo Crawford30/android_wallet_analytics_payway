@@ -126,6 +126,7 @@ dependencies {
 
     //okhttp3 bom
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+
     //okhttp artifacts
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
@@ -151,15 +152,24 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     testImplementation "androidx.room:room-testing:$room_version"
+
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    //Unit Testing
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-
+    //mockito
     testImplementation 'org.mockito:mockito-core:3.11.2'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:3.0.0'
+
+    //MockWebserver
+    testImplementation('com.squareup.okhttp3:mockwebserver:4.9.1')
+
+    // Needed for unit testing API
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
 
 
