@@ -7,6 +7,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/transaction_history_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:text="Joel"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/service"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@tools:sample/full_names" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="54dp"
@@ -17,6 +34,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/transaction_history_image_place_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="center"
@@ -24,40 +42,42 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/transaction_history_withdrawal_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="Joel"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@tools:sample/full_names" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/transaction_history_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:text="BCA - 34298493583"
         android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/transaction_history_withdrawal_amount"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/transaction_history_deposit_amount"
+        android:layout_width="112dp"
+        android:layout_height="22dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="+ $154.50"
         android:textColor="#6FCF97"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

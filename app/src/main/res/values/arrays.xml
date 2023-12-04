@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="transaction_types">
+        <item>All</item>
+        <item>Deposit</item>
+        <item>Withdrawal</item>
+    </string-array>
+</resources>
