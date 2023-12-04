@@ -1,6 +1,6 @@
-# wallet-analytics-payway
 
-# Wallet Analytics With MVVM Architecture
+# PayWay Wallet Analytics With MVVM Architecture
+
 
 ### 1. **Model-View-ViewModel (MVVM)**
 -> This architectural pattern separates an application into three main components: <br />
