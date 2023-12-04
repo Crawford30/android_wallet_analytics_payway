@@ -51,6 +51,30 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Dashboard Statistics"
 
+        /**
+         * Get the height of the Credit card view
+         */
+        val creditCardHeight = binding?.creditCardView?.height
+
+        /**
+         * Get the existing layout parameters of  Credit card view
+         */
+        val layoutParams = binding?.creditCardView?.layoutParams
+
+
+        /**
+         * Update the width in the layout parameters to a standard size
+         */
+        if (creditCardHeight != null) {
+            layoutParams?.width = (creditCardHeight * 0.6296296296).toInt()
+        }
+
+        /**
+         * UApply the updated layout parameters to the view
+         */
+        binding?.creditCardView?.layoutParams = layoutParams
+
+
         binding?.transactionDashboardRecycler?.apply {
             layoutManager = LinearLayoutManager(activity)
             val topSPacingDecoration = TopSpacingItemDecoration(20)
@@ -67,14 +91,10 @@ class HomeFragment : Fragment() {
          */
         viewLifecycleOwner.lifecycleScope.launch {
             appViewModel.dashboardLiveData.observe(viewLifecycleOwner) {
-//                println("DASHBOARD: ${it}")
                 val balance = it.total_deposits.toLong() - it.total_withdrawals.toLong()
                 binding?.balanceTextView?.text = "${formatNumberToThousands((balance))} UGX"
                 adapter.submitList(it.category_breakdown)
                 dailyStatAdapter.submitList(it.daily_statistics)
-
-                print("DAILY STAT: ${it.daily_statistics}")
-
             }
         }
     }
