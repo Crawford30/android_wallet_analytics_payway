@@ -12,7 +12,7 @@ import java.io.File
  * Custom Class providing Global application state
  */
 @HiltAndroidApp
-class App : Application() {
+open class App : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
