@@ -56,6 +56,9 @@ class ChartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Chart Statistics"
 
+        val exportButton = view.findViewById<Button>(R.id.btnExport)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+
         spinner = binding?.spinnerFilter ?: view.findViewById(R.id.spinnerFilter)
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -91,16 +94,22 @@ class ChartFragment : Fragment() {
             }
         }
 
-        val exportButton = view.findViewById<Button>(R.id.btnExport)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+
 
         exportButton.setOnClickListener {
             if (checkPermission()) {
-                // Disable the button and show the progress bar
+
+                /**
+                 * Disable the button and show the progress bar
+                 */
+
                 exportButton.isEnabled = false
                 progressBar.visibility = View.VISIBLE
 
-                // Perform the export operation asynchronously
+
+                /**
+                 * Perform the export operation asynchronously
+                 */
                 GlobalScope.launch {
                     exportChartDataToExcel(
                         selectedOption,
@@ -109,7 +118,10 @@ class ChartFragment : Fragment() {
                         withdrawalEntries
                     )
 
-                    // Re-enable the button and hide the progress bar on the main/UI thread
+
+                    /**
+                     * Re-enable the button and hide the progress bar on the main/UI thread
+                     */
                     withContext(Dispatchers.Main) {
                         exportButton.isEnabled = true
                         progressBar.visibility = View.GONE
@@ -121,18 +133,6 @@ class ChartFragment : Fragment() {
         }
 
 
-//        view.findViewById<Button>(R.id.btnExport).setOnClickListener {
-//            if (checkPermission()) {
-//                exportChartDataToExcel(
-//                    selectedOption,
-//                    categories,
-//                    depositEntries,
-//                    withdrawalEntries
-//                )
-//            } else {
-//                requestPermission()
-//            }
-//        }
     }
 
     /**
