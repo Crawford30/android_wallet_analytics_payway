@@ -3,7 +3,9 @@ package com.example.mobilewalletanalytics.data.models
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
+/**
+ * Transaction  [dataclass]
+ */
 @Parcelize
 data class Transaction(
     val id: Int,

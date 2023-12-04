@@ -38,6 +38,11 @@ interface Api {
     @GET("api/dashboard")
     suspend fun fetchDashboardStatistics(): TransactionDashboard
 
+
+    /**
+     * Fetch all transactions.
+     * Returns a list of [Transaction] which are not paged.
+     */
     @GET("api/transactions")
     suspend fun fetchAllData(): List<Transaction>
 

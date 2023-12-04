@@ -12,7 +12,12 @@ import com.example.mobilewalletanalytics.utils.formatNumberToThousands
 import com.example.mobilewalletanalytics.utils.formatTimestamp
 import com.google.android.material.textview.MaterialTextView
 
+
+/**
+ * Transaction history ViewHolder
+ */
 class TransactionHistoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
     private val categoryTextView: MaterialTextView = view.findViewById(R.id.transaction_history_category)
     private val serviceTextView: MaterialTextView = view.findViewById(R.id.transaction_history_service)
     private val transactionDateTextView: MaterialTextView =

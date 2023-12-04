@@ -7,6 +7,9 @@ import com.example.mobilewalletanalytics.data.models.DailyStatistic
 import com.example.mobilewalletanalytics.presentation.viewholders.DailyTransactionsViewHolder
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
+/**
+ * The daily transaction adapter to be used with the  [RecyclerView] for Daily Transactions
+ */
 class DailyTransactionsAdapter(
     private val progressIndicator: CircularProgressIndicator,
     private val onItemClicked: (transaction: DailyStatistic) -> Unit

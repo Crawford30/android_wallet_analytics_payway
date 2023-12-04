@@ -57,6 +57,10 @@ class RemoteRepoImpl @Inject constructor(val api: Api) : RemoteRepo {
         return api.fetchDashboardStatistics()
     }
 
+    /**
+     * Performs an api call to fetch all the  user transactions.
+     * The data is not paged here
+     */
     override suspend fun fetchAllUserTransactions(): List<Transaction> {
         return  api.fetchAllData()
     }

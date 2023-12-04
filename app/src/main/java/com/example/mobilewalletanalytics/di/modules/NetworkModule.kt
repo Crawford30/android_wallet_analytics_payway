@@ -50,8 +50,6 @@ object NetworkModule {
             .client(client)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
-
-        println("BUILDER: $retrofitBuilder")
         return retrofitBuilder.build()
     }
 

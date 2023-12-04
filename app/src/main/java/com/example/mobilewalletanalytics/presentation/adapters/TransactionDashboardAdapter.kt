@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilewalletanalytics.data.models.CategoryBreakdown
 import com.example.mobilewalletanalytics.presentation.viewholders.TransactionDashboardViewHolder
+import com.example.mobilewalletanalytics.presentation.viewmodels.AppViewModel
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
+/**
+ * The dashboard adapter to be used with the  [RecyclerView]
+ */
 class TransactionDashboardAdapter(
     private val progressIndicator: CircularProgressIndicator,
     private val onItemClicked: (transaction: CategoryBreakdown) -> Unit

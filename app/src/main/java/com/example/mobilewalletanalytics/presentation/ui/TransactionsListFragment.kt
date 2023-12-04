@@ -21,8 +21,6 @@ class TransactionsListFragment : Fragment() {
     private val appViewModel: AppViewModel by activityViewModels()
     private var binding: FragmentTransactionsListBinding? = null
     private lateinit var adapter: TransactionHistoryAdapter
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,6 +42,10 @@ class TransactionsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Transactions History"
+
+        /**
+         * Call the method to for the list of transactions from the [AppViewModel]
+         */
         viewLifecycleOwner.lifecycleScope.launch {
             appViewModel.transactionLiveData.observe(viewLifecycleOwner) {
                 adapter.submitList(it)

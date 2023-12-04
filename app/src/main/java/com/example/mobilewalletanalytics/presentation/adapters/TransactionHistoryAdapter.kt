@@ -8,7 +8,9 @@ import com.example.mobilewalletanalytics.data.models.Transaction
 import com.example.mobilewalletanalytics.presentation.viewholders.TransactionHistoryViewHolder
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
-
+/**
+ * The Transaction History adapter to be used with the  [RecyclerView]
+ */
 class TransactionHistoryAdapter (private val progressIndicator: CircularProgressIndicator,
                     private val onItemClicked: (transaction: Transaction) -> Unit) :
     RecyclerView.Adapter<TransactionHistoryViewHolder>() {
@@ -18,7 +20,6 @@ class TransactionHistoryAdapter (private val progressIndicator: CircularProgress
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionHistoryViewHolder {
         return TransactionHistoryViewHolder.create(parent)
     }
-
 
 
     override fun onBindViewHolder(holder: TransactionHistoryViewHolder, position: Int) {

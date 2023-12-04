@@ -11,6 +11,9 @@ import com.example.mobilewalletanalytics.data.models.CategoryBreakdown
 import com.example.mobilewalletanalytics.utils.formatNumberToThousands
 import com.google.android.material.textview.MaterialTextView
 
+/**
+ * Transaction dashboard ViewHolder
+ */
 class TransactionDashboardViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private val categoryTextView: MaterialTextView = view.findViewById(R.id.category_label)
@@ -26,10 +29,11 @@ class TransactionDashboardViewHolder(private val view: View) : RecyclerView.View
         onItemClicked: (transaction: CategoryBreakdown) -> Unit
     ) {
         if (transaction != null) {
-//            val categoryBreakdown = transaction.get(absoluteAdapterPosition)
             categoryTextView.text = transaction.category
-
-
+            /**
+             * Used to set the image place holder with respective images
+             * based on the category of transactions
+             */
             when (transaction.category) {
                 "Mobile Money" -> {
                     imagePlaceholder.setImageResource(R.drawable.ic_mobile_money)

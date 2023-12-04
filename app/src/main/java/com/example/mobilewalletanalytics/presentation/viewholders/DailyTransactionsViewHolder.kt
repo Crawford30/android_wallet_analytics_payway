@@ -12,6 +12,9 @@ import com.example.mobilewalletanalytics.utils.formatNumberToThousands
 import com.example.mobilewalletanalytics.utils.formatTimestamp
 import com.google.android.material.textview.MaterialTextView
 
+/**
+ * Transaction daily statistics ViewHolder
+ */
 class DailyTransactionsViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private val transactionDate: MaterialTextView = view.findViewById(R.id.transaction_daily_date)
@@ -21,17 +24,13 @@ class DailyTransactionsViewHolder(private val view: View) : RecyclerView.ViewHol
         view.findViewById(R.id.daily_deposit_transaction_amount)
     private val imagePlaceholder: ImageView = view.findViewById(R.id.daily_dashboard_image_place_holder)
 
-
     fun bindTo(
         transaction: DailyStatistic?,
         onItemClicked: (transaction: DailyStatistic) -> Unit
     ) {
         if (transaction != null) {
-
-
             imagePlaceholder.setImageResource(R.drawable.ic_mobile_money)
             transactionDate.text = formatTimestamp(transaction.transaction_date)
-
             transactionDepositAmountTextView.text = "${formatNumberToThousands(transaction.total_deposits.toLong())} UGX"
             transactionDepositAmountTextView.setTextColor(Color.GREEN)
             transactionWithdrawalAmountTextView.text = "-${formatNumberToThousands(transaction.total_withdrawals.toLong())} UGX"

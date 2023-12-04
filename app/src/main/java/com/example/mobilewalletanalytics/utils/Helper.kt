@@ -21,7 +21,6 @@ fun formatNumberToThousands(number: Long): String {
  * Date formatter into readable form
  */
 
-
 fun formatTimestamp(dateString: String): String {
     val inputFormats = arrayOf(
         SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()),

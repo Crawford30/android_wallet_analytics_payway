@@ -19,11 +19,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AllTransactionsFragment : Fragment() {
-
     private var binding: FragmentAllTransactionsBinding? = null
     private val appViewModel: AppViewModel by activityViewModels()
     lateinit var adapter: TransactionsPagingAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +41,9 @@ class AllTransactionsFragment : Fragment() {
         }
         binding?.allTransactionsRecyclerView?.adapter = adapter
 
+        /**
+         * Call the method to  list all the transactions from the [AppViewModel]
+         */
         appViewModel.allTransactions.observe(viewLifecycleOwner){ data ->
             viewLifecycleOwner.lifecycleScope.launch {
                 data?.let { adapter.submitData(data) }

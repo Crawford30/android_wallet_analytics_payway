@@ -27,9 +27,6 @@ import dagger.hilt.android.HiltAndroidApp
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val appViewModel: AppViewModel by viewModels()
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,20 +34,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Let the Navigation Component handle tha AppBar Config
+
+        /**
+         * Let the Navigation Component handle tha AppBar Config(Disabled for now)
+         * as i'm Setting titles in the fragments
+         *
+         */
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
-
-        //NavigationUI.setupActionBarWithNavController(appBarConfiguration, navController)
-
-
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        // Assuming you have already initialized your BottomNavigationView
+        /**
+         * Bottom navigation settings and actions
+         */
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
@@ -74,17 +69,11 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.chartFragment)
                     true
                 }
-
-
-
-
-
                 else -> false
             }
         }
 
     }
-
 
 }
 

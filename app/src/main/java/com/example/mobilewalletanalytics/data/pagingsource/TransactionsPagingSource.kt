@@ -28,7 +28,6 @@ class TransactionsPagingSource(val api: Api) : PagingSource<Int, Transaction>(){
                 prevKey = null,
                 nextKey = nextKey
             )
-
         }catch (e: IOException){
             LoadResult.Error(e)
         }catch (e: HttpException){

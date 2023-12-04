@@ -26,9 +26,7 @@ class HomeFragment : Fragment() {
     private val appViewModel: AppViewModel by activityViewModels()
     private var binding: FragmentHomeBinding? = null
     private lateinit var adapter: TransactionDashboardAdapter
-
     private lateinit var dailyStatAdapter: DailyTransactionsAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +62,9 @@ class HomeFragment : Fragment() {
             val topSPacingDecoration = TopSpacingItemDecoration(20)
             addItemDecoration(topSPacingDecoration)
         }
-
+        /**
+         * Call the method to for the dashboard statistics from the [AppViewModel]
+         */
         viewLifecycleOwner.lifecycleScope.launch {
             appViewModel.dashboardLiveData.observe(viewLifecycleOwner) {
 //                println("DASHBOARD: ${it}")
