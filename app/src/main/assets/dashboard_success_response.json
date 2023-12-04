@@ -1,0 +1,198 @@
+{
+  "total_deposits": "146232639",
+  "total_withdrawals": "136270800",
+  "category_breakdown": [
+    {
+      "category": "Airtime",x
+      "withdrawal_amount": 0,
+      "deposit_amount": "6851750"
+    },
+    {
+      "category": "Internet",
+      "withdrawal_amount": 0,
+      "deposit_amount": "4556600"
+    },
+    {
+      "category": "Loans",
+      "withdrawal_amount": 0,
+      "deposit_amount": "6693700"
+    },
+    {
+      "category": "Mobile Money",
+      "withdrawal_amount": "136270800",
+      "deposit_amount": "101286600"
+    },
+    {
+      "category": "Taxes",
+      "withdrawal_amount": 0,
+      "deposit_amount": "10696300"
+    },
+    {
+      "category": "TV",
+      "withdrawal_amount": 0,
+      "deposit_amount": "2778050"
+    },
+    {
+      "category": "Utilities",
+      "withdrawal_amount": 0,
+      "deposit_amount": "13369639"
+    }
+  ],
+  "daily_statistics": [
+    {
+      "transaction_date": "2023-10-01",
+      "total_deposits": "7091900",
+      "total_withdrawals": "6729500"
+    },
+    {
+      "transaction_date": "2023-10-02",
+      "total_deposits": "5999990",
+      "total_withdrawals": "5839500"
+    },
+    {
+      "transaction_date": "2023-10-03",
+      "total_deposits": "4305410",
+      "total_withdrawals": "3656500"
+    },
+    {
+      "transaction_date": "2023-10-04",
+      "total_deposits": "6543600",
+      "total_withdrawals": "6109000"
+    },
+    {
+      "transaction_date": "2023-10-05",
+      "total_deposits": "4210850",
+      "total_withdrawals": "4227000"
+    },
+    {
+      "transaction_date": "2023-10-06",
+      "total_deposits": "4179150",
+      "total_withdrawals": "3715500"
+    },
+    {
+      "transaction_date": "2023-10-07",
+      "total_deposits": "5058733",
+      "total_withdrawals": "4570000"
+    },
+    {
+      "transaction_date": "2023-10-08",
+      "total_deposits": "6169950",
+      "total_withdrawals": "5365500"
+    },
+    {
+      "transaction_date": "2023-10-09",
+      "total_deposits": "4161782",
+      "total_withdrawals": "3974500"
+    },
+    {
+      "transaction_date": "2023-10-10",
+      "total_deposits": "6530780",
+      "total_withdrawals": "6238000"
+    },
+    {
+      "transaction_date": "2023-10-11",
+      "total_deposits": "3532800",
+      "total_withdrawals": "4011000"
+    },
+    {
+      "transaction_date": "2023-10-12",
+      "total_deposits": "3846150",
+      "total_withdrawals": "3252000"
+    },
+    {
+      "transaction_date": "2023-10-13",
+      "total_deposits": "4366487",
+      "total_withdrawals": "4236500"
+    },
+    {
+      "transaction_date": "2023-10-14",
+      "total_deposits": "3000090",
+      "total_withdrawals": "3390000"
+    },
+    {
+      "transaction_date": "2023-10-15",
+      "total_deposits": "4523750",
+      "total_withdrawals": "4559000"
+    },
+    {
+      "transaction_date": "2023-10-16",
+      "total_deposits": "8370070",
+      "total_withdrawals": "2773000"
+    },
+    {
+      "transaction_date": "2023-10-17",
+      "total_deposits": "3390330",
+      "total_withdrawals": "3386500"
+    },
+    {
+      "transaction_date": "2023-10-18",
+      "total_deposits": "3415961",
+      "total_withdrawals": "2774500"
+    },
+    {
+      "transaction_date": "2023-10-19",
+      "total_deposits": "4059750",
+      "total_withdrawals": "4577500"
+    },
+    {
+      "transaction_date": "2023-10-20",
+      "total_deposits": "3388772",
+      "total_withdrawals": "3217500"
+    },
+    {
+      "transaction_date": "2023-10-21",
+      "total_deposits": "3211480",
+      "total_withdrawals": "3179300"
+    },
+    {
+      "transaction_date": "2023-10-22",
+      "total_deposits": "5607550",
+      "total_withdrawals": "6335500"
+    },
+    {
+      "transaction_date": "2023-10-23",
+      "total_deposits": "4983984",
+      "total_withdrawals": "3874500"
+    },
+    {
+      "transaction_date": "2023-10-24",
+      "total_deposits": "3188450",
+      "total_withdrawals": "3483500"
+    },
+    {
+      "transaction_date": "2023-10-25",
+      "total_deposits": "3048000",
+      "total_withdrawals": "3066000"
+    },
+    {
+      "transaction_date": "2023-10-26",
+      "total_deposits": "2846080",
+      "total_withdrawals": "3201000"
+    },
+    {
+      "transaction_date": "2023-10-27",
+      "total_deposits": "4221300",
+      "total_withdrawals": "4012500"
+    },
+    {
+      "transaction_date": "2023-10-28",
+      "total_deposits": "4853450",
+      "total_withdrawals": "4798500"
+    },
+    {
+      "transaction_date": "2023-10-29",
+      "total_deposits": "7048140",
+      "total_withdrawals": "7053500"
+    },
+    {
+      "transaction_date": "2023-10-30",
+      "total_deposits": "5727700",
+      "total_withdrawals": "5494500"
+    },
+    {
+      "transaction_date": "2023-10-31",
+      "total_deposits": "5350200",
+      "total_withdrawals": "5169500"
+    }
+  ]
+}
