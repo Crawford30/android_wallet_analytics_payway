@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         /**
          * Let the Navigation Component handle tha AppBar Config(Disabled for now)
          * as i'm Setting titles in the fragments
@@ -72,9 +71,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
-
 }
 
 
