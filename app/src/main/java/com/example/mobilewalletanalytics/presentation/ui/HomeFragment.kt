@@ -27,6 +27,8 @@ class HomeFragment : Fragment() {
     private var binding: FragmentHomeBinding? = null
     private lateinit var adapter: TransactionDashboardAdapter
     private lateinit var dailyStatAdapter: DailyTransactionsAdapter
+    private val standardCreditHeight =  2.125
+    private val standardCreditWidth =  3.375
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +54,9 @@ class HomeFragment : Fragment() {
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Dashboard Statistics"
 
         /**
-         * Get the height of the Credit card view
+         * Get the width of the Credit card view
          */
-        val creditCardHeight = binding?.creditCardView?.height
+        val creditCardWidth = binding?.creditCardView?.width
 
         /**
          * Get the existing layout parameters of  Credit card view
@@ -63,14 +65,17 @@ class HomeFragment : Fragment() {
 
 
         /**
-         * Update the width in the layout parameters to a standard size
+         * Update the height in the layout parameters to a standard size
+         * Credit cards are 3.375 inches wide by 2.125 inches high
+         *
          */
-        if (creditCardHeight != null) {
-            layoutParams?.width = (creditCardHeight * 0.6296296296).toInt()
+        if (creditCardWidth != null) {
+            val standardCreditHeightToWidthRatio = (standardCreditHeight/standardCreditHeight) //0.6296296296
+            layoutParams?.height = (creditCardWidth * (standardCreditHeightToWidthRatio).toInt())
         }
 
         /**
-         * UApply the updated layout parameters to the view
+         * Apply the updated layout parameters to the view
          */
         binding?.creditCardView?.layoutParams = layoutParams
 
@@ -86,6 +91,7 @@ class HomeFragment : Fragment() {
             val topSPacingDecoration = TopSpacingItemDecoration(20)
             addItemDecoration(topSPacingDecoration)
         }
+
         /**
          * Call the method to for the dashboard statistics from the [AppViewModel]
          */
