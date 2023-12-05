@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
          *
          */
         if (creditCardWidth != null) {
-            val standardCreditHeightToWidthRatio = (standardCreditHeight/standardCreditHeight) //0.6296296296
+            val standardCreditHeightToWidthRatio = (standardCreditHeight/standardCreditWidth) //0.6296296296
             layoutParams?.height = (creditCardWidth * (standardCreditHeightToWidthRatio).toInt())
         }
 

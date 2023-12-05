@@ -149,7 +149,7 @@ class ChartFragment : Fragment() {
              * Create a new workbook
              */
             val workbook: Workbook = XSSFWorkbook()
-            val sheet = workbook.createSheet("Chart Data")
+            val sheet = workbook.createSheet("Monthly Chart Breakdown Data")
 
             /**
              * Create the header row
@@ -185,7 +185,7 @@ class ChartFragment : Fragment() {
              */
             val file = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
-                "chart_data.xlsx"
+                "monthly_chart_data_breakdown.xlsx"
             )
 
 
