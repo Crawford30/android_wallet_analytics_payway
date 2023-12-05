@@ -36,7 +36,7 @@ _**Single Activity Approach**_<br />
 
 ### 7. **Screenshots**
 
-
+####  **Dashboard**
 ![WhatsApp Image 2023-12-05 at 2 36 55 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/df7cafe0-7a9a-4bdb-b9ea-2fff72a01339)
 
 ![WhatsApp Image 2023-12-05 at 2 36 56 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/c8dff44b-0152-479e-8a52-c90a19d3fbdf)
@@ -45,13 +45,20 @@ _**Single Activity Approach**_<br />
 
 ![WhatsApp Image 2023-12-05 at 2 36 57 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/d42f315c-20b0-47b8-8406-17a37134aa33)
 
+####  **Transactions History Screen**
 ![WhatsApp Image 2023-12-05 at 2 36 57 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/ed430734-e833-45e7-8577-a940ed30b078)
 
+####  **Dashboard**
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/7c613d22-d79d-4635-a82f-064c73d0bef7)
 
+####  **Chart Screen**
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM (2)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/783a9e9e-b05d-4d8b-b5e4-9b96005747cf)
 
+
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/d11b14f7-5e91-465a-8b02-a54dfd858f4e)
+
+
+####  **Excel Downloaded File**
 
 ![WhatsApp Image 2023-12-05 at 4 47 19 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/6dbf7f68-00af-4a23-b2cc-dff1a349d97b)
 
