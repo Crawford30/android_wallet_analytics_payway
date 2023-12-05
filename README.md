@@ -44,7 +44,7 @@ _**Single Activity Approach**_<br />
 
 ![WhatsApp Image 2023-12-05 at 2 36 56 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/c8dff44b-0152-479e-8a52-c90a19d3fbdf)
 
-###  **Transactions History Screen**
+###  **All Transactions Screen**
 ![WhatsApp Image 2023-12-05 at 2 36 57 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/ed430734-e833-45e7-8577-a940ed30b078)
 
 ###  **Chart Screen**
