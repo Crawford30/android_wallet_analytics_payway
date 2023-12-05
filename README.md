@@ -52,15 +52,15 @@ _**Single Activity Approach**_<br />
 
 ###  **Chart Screen** <br /> <br />
 
-####  **Chart Deposit Screen ONLY**
+#### a). **Chart Screen for Deposit ONLY**
 
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/7c613d22-d79d-4635-a82f-064c73d0bef7) <br /> <br />
 
-####  **Chart Withdrawal Screen ONLY**
+#### b). **Chart Screen for Withdrawal  ONLY**
 
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/d11b14f7-5e91-465a-8b02-a54dfd858f4e) <br /> <br />
 
-####  **Chart Screen (Both Deposit and Withdrawal)**
+#### c). **Chart Screen (Both Deposit and Withdrawal)**
 
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM (2)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/783a9e9e-b05d-4d8b-b5e4-9b96005747cf) <br /> <br />
 
