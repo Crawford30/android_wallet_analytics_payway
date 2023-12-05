@@ -32,9 +32,10 @@ _**Single Activity Approach**_<br />
 -> This provides a better user experience when dealing with large data sets, especially in scenarios like endless scrolling. (as seen in the All Transactions Screen)<br />
 
 ### 6. **Retrofit**
--> Retrofit serving as the communication bridge between  Android application and backend server, facilitating seamless API interactions. 
+-> Retrofit serving as the communication bridge between  Android application and backend server, facilitating seamless API interactions. <br />
 
 ### 7. **Screenshots**
+-> Here are some of the screenshots from the app. <br /><br />
 
 ###  **Dashboard**
 
