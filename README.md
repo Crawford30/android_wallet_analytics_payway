@@ -51,13 +51,20 @@ _**Single Activity Approach**_<br />
 ![WhatsApp Image 2023-12-05 at 2 36 57 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/d42f315c-20b0-47b8-8406-17a37134aa33)
 
 ###  **Chart Screen**
+
+####  **Chart Deposit Screen ONLY**
+
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM (1)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/7c613d22-d79d-4635-a82f-064c73d0bef7)
 
+####  **Chart Withdrawal Screen ONLY**
+
+![WhatsApp Image 2023-12-05 at 2 36 58 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/d11b14f7-5e91-465a-8b02-a54dfd858f4e)
+
+####  **Chart Screen (Both Deposit and Withdrawal)**
 
 ![WhatsApp Image 2023-12-05 at 2 36 58 PM (2)](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/783a9e9e-b05d-4d8b-b5e4-9b96005747cf)
 
 
-![WhatsApp Image 2023-12-05 at 2 36 58 PM](https://github.com/Crawford30/android_wallet_analytics_payway/assets/30619160/d11b14f7-5e91-465a-8b02-a54dfd858f4e)
 
 
 ###  **Excel Downloaded File**
