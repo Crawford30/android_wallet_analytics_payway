@@ -32,6 +32,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,6 +44,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 
+@AndroidEntryPoint
 class ChartFragment : Fragment() {
     private var binding: FragmentChartBinding? = null
     private val appViewModel: AppViewModel by activityViewModels()
